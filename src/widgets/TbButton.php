@@ -18,6 +18,7 @@
 class TbButton extends CWidget
 {
 	// Button callback types.
+        const BUTTON_DEFAULT = 'default';
 	const BUTTON_LINK = 'link';
 	const BUTTON_BUTTON = 'button';
 	const BUTTON_SUBMIT = 'submit';
@@ -30,12 +31,12 @@ class TbButton extends CWidget
 	const BUTTON_INPUTSUBMIT = 'inputSubmit';
 
 	// Button types.
+        const TYPE_DEFAULT = 'default';
 	const TYPE_PRIMARY = 'primary';
+        const TYPE_SUCCESS = 'success';
 	const TYPE_INFO = 'info';
-	const TYPE_SUCCESS = 'success';
 	const TYPE_WARNING = 'warning';
 	const TYPE_DANGER = 'danger';
-	const TYPE_INVERSE = 'inverse';
 	const TYPE_LINK = 'link';
 
 	// Button sizes.
@@ -152,13 +153,13 @@ class TbButton extends CWidget
 		$classes = array('btn');
 
 		$validTypes = array(
-			self::TYPE_LINK,
+                        self::TYPE_DEFAULT,
 			self::TYPE_PRIMARY,
+                        self::TYPE_SUCCESS,
 			self::TYPE_INFO,
-			self::TYPE_SUCCESS,
 			self::TYPE_WARNING,
 			self::TYPE_DANGER,
-			self::TYPE_INVERSE
+                        self::TYPE_LINK,
 		);
 
 		if (isset($this->type) && in_array($this->type, $validTypes)) {

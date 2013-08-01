@@ -33,7 +33,7 @@ class TbButtonGroup extends CWidget
 	 * @var string the button type.
 	 * @see BootButton::type
 	 */
-	public $type;
+	public $type = TbButton::TYPE_DEFAULT;
 
 	/**
 	 * @var string the button size.
@@ -66,6 +66,11 @@ class TbButtonGroup extends CWidget
 	 */
 	public $stacked = false;
 
+        /**
+         *  @var boolean indicates whether the button group appears justified. Defaults to 'false'.
+         */
+        public $justified = false;
+        
 	/**
 	 * @var boolean indicates whether dropdowns should be dropups instead. Defaults to 'false'.
 	 */
@@ -86,6 +91,10 @@ class TbButtonGroup extends CWidget
 
 		if ($this->stacked === true) {
 			$classes[] = 'btn-group-vertical';
+		}
+                
+                if ($this->justified === true) {
+			$classes[] = 'btn-group-justified';
 		}
 
 		if ($this->dropup === true) {
