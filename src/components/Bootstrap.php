@@ -82,6 +82,12 @@ class Bootstrap extends CApplicationComponent
 	 * @see https://github.com/Nijikokun/bootstrap-notify
 	 */
 	public $enableNotifierJS = true;
+	
+	/**
+	 * @var bool enable respond.js. Default value is `true`
+	 * @see https://github.com/Nijikokun/bootstrap-notify
+	 */
+	public $enableRespondJS = true;
 
 	/**
 	 * @var boolean to register Bootstrap CSS files in AJAX requests
@@ -297,6 +303,9 @@ class Bootstrap extends CApplicationComponent
 
 		if ($this->enableNotifierJS)
 			$this->registerPackage('notify');
+
+		if ($this->enableRespondJS)
+			$this->registerPackage('respond');
 
 		$this->registerPopover();
 		$this->registerTooltip();
@@ -895,6 +904,9 @@ class Bootstrap extends CApplicationComponent
 
 		if ($this->enableNotifierJS)
 			$this->registerPackage('notify');
+
+		if ($this->enableRespondJS)
+			$this->registerPackage('respond');
 	}
 
 	/**
