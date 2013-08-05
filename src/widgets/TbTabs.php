@@ -64,6 +64,11 @@ class TbTabs extends CWidget
 	 * @var array the HTML attributes for the widget container.
 	 */
 	public $htmlOptions = array();
+    
+    /**
+	 * @var boolean whether has tab content section.
+	 */
+	public $hasContent = true;
 
 	/**
 	 * @var array the HTML attributes for the widget tab content container.
@@ -107,12 +112,14 @@ class TbTabs extends CWidget
 				$this->htmlOptions['class'] = $classes;
 			}
 		}
-
-		if (isset($this->tabContentHtmlOptions['class'])) {
-			$this->tabContentHtmlOptions['class'] .= ' tab-content';
-		} else {
-			$this->tabContentHtmlOptions['class'] = 'tab-content';
-		}
+        
+        if($this->hasContent) {
+            if (isset($this->tabContentHtmlOptions['class'])) {
+                $this->tabContentHtmlOptions['class'] .= ' tab-content';
+            } else {
+                $this->tabContentHtmlOptions['class'] = 'tab-content';
+            }
+        }
 	}
 
 	/**
@@ -140,13 +147,20 @@ class TbTabs extends CWidget
 		$tabs = ob_get_clean();
 
 		ob_start();
-		echo CHtml::openTag('div', $this->tabContentHtmlOptions);
-		echo implode('', $content);
-		echo CHtml::closeTag('div');
-		$content = ob_get_clean();
-
-		echo CHtml::openTag('div', $this->htmlOptions);
-		echo $this->placement === self::PLACEMENT_BELOW ? $content . $tabs : $tabs . $content;
+        
+        if($this->hasContent) {
+            echo CHtml::openTag('div', $this->tabContentHtmlOptions);
+            echo implode('', $content);
+            echo CHtml::closeTag('div');
+            $content = ob_get_clean();
+        }
+        
+		echo CHtml::openTag('div', $this->htmlOptions); 
+        if($this->hasContent) {
+            echo $this->placement === self::PLACEMENT_BELOW ? $content . $tabs : $tabs . $content;
+        } else {
+            echo $tabs;
+        }
 		echo CHtml::closeTag('div');
 
 		/** @var CClientScript $cs */

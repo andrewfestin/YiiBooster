@@ -18,7 +18,7 @@
 class TbButton extends CWidget
 {
 	// Button callback types.
-        const BUTTON_DEFAULT = 'default';
+    const BUTTON_DEFAULT = 'default';
 	const BUTTON_LINK = 'link';
 	const BUTTON_BUTTON = 'button';
 	const BUTTON_SUBMIT = 'submit';
@@ -31,9 +31,9 @@ class TbButton extends CWidget
 	const BUTTON_INPUTSUBMIT = 'inputSubmit';
 
 	// Button types.
-        const TYPE_DEFAULT = 'default';
+    const TYPE_DEFAULT = 'default';
 	const TYPE_PRIMARY = 'primary';
-        const TYPE_SUCCESS = 'success';
+    const TYPE_SUCCESS = 'success';
 	const TYPE_INFO = 'info';
 	const TYPE_WARNING = 'warning';
 	const TYPE_DANGER = 'danger';
