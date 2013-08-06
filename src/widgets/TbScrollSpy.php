@@ -31,6 +31,11 @@ class TbScrollSpy extends CWidget
 	 * @var integer the scroll offset (in pixels).
 	 */
 	public $offset;
+    
+    /**
+	 * @var boolean whether there will be an offset on viewing the content.
+	 */
+    public $clickOffset = false;
 
 	/**
 	 * @var array string[] the Javascript event handlers.
@@ -53,6 +58,20 @@ class TbScrollSpy extends CWidget
 		if (isset($this->offset)) {
 			$script .= "jQuery('{$this->selector}').attr('data-offset', '{$this->offset}');";
 		}
+        
+        if($this->clickOffset) {
+            $script .= "jQuery(document).ready(function() {
+                jQuery('{$this->selector}').attr('style', 'padding-top: '+({$this->offset}-1)+'px');
+
+                jQuery('{$this->target} ul li a').click(function(event) {
+                    event.preventDefault();
+                    window.location.hash = $(this).attr('href');
+
+                    $($(this).attr('href'))[0].scrollIntoView();
+                    scrollBy(0, -{$this->offset}+1);
+                });
+            });";
+        }
 
 		/** @var CClientScript $cs */
 		$cs = Yii::app()->getClientScript();
