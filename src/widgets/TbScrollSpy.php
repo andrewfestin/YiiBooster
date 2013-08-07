@@ -33,9 +33,14 @@ class TbScrollSpy extends CWidget
 	public $offset;
     
     /**
-	 * @var boolean whether there will be an offset on viewing the content.
+	 * @var boolean whether there will be an offset when viewing the content via click event.
 	 */
-    public $clickOffset = false;
+    public $clickOffset = true;
+    
+    /**
+	 * @var int activates smooth scrolling (in milliseconds)
+	 */
+    public $animate;
 
 	/**
 	 * @var array string[] the Javascript event handlers.
@@ -59,21 +64,32 @@ class TbScrollSpy extends CWidget
 			$script .= "jQuery('{$this->selector}').attr('data-offset', '{$this->offset}');";
 		}
         
-        if($this->clickOffset) {
+        if($this->clickOffset || $this->animate) {
             $script .= "jQuery(document).ready(function() {
-                jQuery('{$this->selector}').attr('style', 'padding-top: '+({$this->offset}-1)+'px');
+                " . ($this->clickOffset ? "jQuery('{$this->selector}').attr('style', 'padding-top: '+({$this->offset}-1)+'px');" : "") . "
 
                 jQuery('{$this->target} ul li a').click(function(event) {
                     event.preventDefault();
-                    window.location.hash = $(this).attr('href');
-
-                    $($(this).attr('href'))[0].scrollIntoView();
-                    scrollBy(0, -{$this->offset}+1);
+                    
+                    ".($this->animate ? "
+                        if($(this).parent().attr('class')) {
+                            return;
+                        }
+                        $($(this).attr('href')).scrollintoview({duration: {$this->animate}, direction: 'vertical', offset:{$this->offset}-1});
+                        window.location.hash = $(this).attr('href');   
+                    " : "
+                        window.location.hash = $(this).attr('href');    
+                        $($(this).attr('href'))[0].scrollIntoView();
+                        scrollBy(0,-{$this->offset}+1);
+                    ")."
                 });
             });";
         }
 
 		/** @var CClientScript $cs */
+        if(isset($this->animate)) {
+            $this->registerClientScript();
+        }
 		$cs = Yii::app()->getClientScript();
 		$cs->registerScript(__CLASS__ . '#' . $this->selector, $script, CClientScript::POS_BEGIN);
 
@@ -84,6 +100,16 @@ class TbScrollSpy extends CWidget
 				"jQuery('{$this->selector}').on('{$name}', {$handler});"
 			);
 		}
+	}
+    
+    /**
+	 *### .registerClientScript()
+	 *
+	 * Registers required client script for animate.
+	 */
+	public function registerClientScript()
+	{
+		Yii::app()->bootstrap->registerPackage('scrollintoview');
 	}
 }
 

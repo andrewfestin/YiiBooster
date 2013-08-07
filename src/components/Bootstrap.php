@@ -85,7 +85,6 @@ class Bootstrap extends CApplicationComponent
 	
 	/**
 	 * @var bool enable respond.js. Default value is `true`
-	 * @see https://github.com/Nijikokun/bootstrap-notify
 	 */
 	public $enableRespondJS = true;
 
@@ -306,7 +305,7 @@ class Bootstrap extends CApplicationComponent
 
 		if ($this->enableRespondJS)
 			$this->registerPackage('respond');
-
+        
 		$this->registerPopover();
 		$this->registerTooltip();
 	}

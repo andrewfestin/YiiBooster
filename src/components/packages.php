@@ -68,4 +68,8 @@ return array(
 		'baseUrl' => $this->getAssetsUrl(),
 		'js' => array('js/respond.min.js')
 	),
+    'scrollintoview' => array(
+		'baseUrl' => $this->getAssetsUrl(),
+		'js' => array('js/jquery.scrollintoview.min.js')
+	),
 );
